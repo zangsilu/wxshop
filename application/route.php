@@ -9,6 +9,8 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+\think\Route::rule('index/create/:id','index/index/create','get');
+\think\Route::rule('banner/:id','api/v1.banner/view','get');
 return [
     '__pattern__' => [
         'name' => '\w+',

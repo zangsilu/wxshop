@@ -3,8 +3,10 @@
 namespace app\library\exception;
 
 
+use app\helper\StringHelper;
 use Exception;
 use think\exception\Handle;
+use think\Log;
 use think\Request;
 
 class ExceptionHandler extends Handle
@@ -12,6 +14,7 @@ class ExceptionHandler extends Handle
     private $status;
     private $code;
     private $message;
+    private $line;
 
     public function render(Exception $e)
     {
@@ -21,8 +24,8 @@ class ExceptionHandler extends Handle
         if($e instanceof ApiException){
             $this->status = $e->status;
             $this->code = $e->code;
-            $this->message = $e->message;
-
+            $this->message = StringHelper::isJson($e->message) ? json_decode($e->message) : $e->message;
+            $this->line = '在'.$e->getFile().'第'.$e->getLine().'行';
         }
         /**
          * 非自定义异常
@@ -32,23 +35,30 @@ class ExceptionHandler extends Handle
              * 开发环境,正常抛错
              */
             if(config('app_debug')){
-                return parent::render($e);
+                $this->status = 500;
+                $this->code = $e->getCode();
+                $this->message = $e->getMessage();
+                $this->line = '在'.$e->getFile().'第'.$e->getLine().'行';
+                // return parent::render($e);
+            }else{
+                /**
+                 * 生产环境,屏蔽错误
+                 */
+                $this->status = 500;
+                $this->code = 0;
+                $this->message = 'Server Internal Error.';
+                //记录日志
+                $this->recordErrorLog($e);
             }
-            /**
-             * 生产环境,屏蔽错误
-             */
-            $this->status = 500;
-            $this->code = 0;
-            $this->message = 'Server Internal Error.';
-            //记录日志
-            $this->recordErrorLog($e);
         }
 
         $request = Request::instance();
         $result = [
-            'message'  => $this->message,
+            'status'  => $this->status,
             'code' => $this->code,
-            'request_url' => $request = $request->url()
+            'message'  => $this->message,
+            'line'  => $this->line,
+            'request_url' => $request = $request->domain().'/'.$request->url()
         ];
         return json($result, $this->status);
     }

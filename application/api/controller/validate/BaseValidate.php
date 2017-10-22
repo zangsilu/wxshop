@@ -3,6 +3,7 @@
 namespace app\api\controller\validate;
 
 
+use app\library\exception\ApiException;
 use think\Exception;
 use think\Request;
 use think\Validate;
@@ -15,8 +16,8 @@ class BaseValidate extends Validate
     public function goCheck()
     {
         $params = Request::instance()->param();
-        if (!$this->check($params)) {
-            throw new Exception($this->error);
+        if (!$this->batch()->check($params)) {
+            throw new ApiException(0,400,$this->error);
         }
         return true;
     }

@@ -6,7 +6,7 @@ namespace app\api\controller\validate;
 class IdMustBeInt extends BaseValidate
 {
     protected $rule = [
-        'id' => 'require|isInt'
+        'id' => 'require|isInt',
     ];
 
     protected function isInt($value, $rule = '', $data = '', $field = '')

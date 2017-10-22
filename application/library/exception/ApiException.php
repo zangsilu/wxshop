@@ -12,7 +12,9 @@ class ApiException extends BaseException
     {
         $this->status = $status;
         $this->code = $code;
-        $this->message = $message ?: ApiExceptionCode::getErrorMessage($code);
+        $this->message = !empty($message) ? (is_array($message) ? json_encode($message,JSON_UNESCAPED_UNICODE) : $message) : ApiExceptionCode::getErrorMessage($code);
+
+        // $this->message = $message ?: ApiExceptionCode::getErrorMessage($code);
     }
 
 

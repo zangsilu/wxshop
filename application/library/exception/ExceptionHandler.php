@@ -39,7 +39,7 @@ class ExceptionHandler extends Handle
                 $this->code = $e->getCode();
                 $this->message = $e->getMessage();
                 $this->line = '在'.$e->getFile().'第'.$e->getLine().'行';
-                // return parent::render($e);
+                return parent::render($e);
             }else{
                 /**
                  * 生产环境,屏蔽错误

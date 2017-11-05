@@ -4,6 +4,7 @@ namespace app\api\model;
 
 class Banner extends Base
 {
+
     public function items()
     {
         return $this->hasMany('BannerItem','banner_id','id');

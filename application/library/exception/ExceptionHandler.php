@@ -26,6 +26,11 @@ class ExceptionHandler extends Handle
             $this->code = $e->code;
             $this->message = StringHelper::isJson($e->message) ? json_decode($e->message) : $e->message;
             $this->line = '在'.$e->getFile().'第'.$e->getLine().'行';
+
+            if(!config('app_debug')){
+                $this->line = null;
+            }
+
         }
         /**
          * 非自定义异常
@@ -60,7 +65,8 @@ class ExceptionHandler extends Handle
             'line'  => $this->line,
             'request_url' => $request = $request->domain().'/'.$request->url()
         ];
-        return json($result, $this->status);
+
+        return jsonError($result, $this->status);
     }
 
     /*

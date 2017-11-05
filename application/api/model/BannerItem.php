@@ -2,9 +2,10 @@
 
 namespace app\api\model;
 
-use think\Model;
-
-class BannerItem extends Model
+class BannerItem extends Base
 {
-    //
+    public function image()
+    {
+        return $this->hasMany('Image','id','img_id');
+    }
 }

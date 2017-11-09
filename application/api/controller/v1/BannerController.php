@@ -15,6 +15,8 @@ class BannerController extends baseController
 
         $result = (new Banner)->with(['items','items.image'])->find($id);
 
+        $imm_prefix = config('params.img_prefix');
+
         if(!$result){
             throw new ApiException(0,400,'数据不存在.');
         }

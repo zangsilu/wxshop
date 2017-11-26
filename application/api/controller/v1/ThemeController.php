@@ -2,10 +2,12 @@
 
 namespace app\api\controller\v1;
 
-use think\Controller;
+use app\api\controller\validate\IdMustBeInt;
+use app\api\model\Theme;
+use app\library\exception\ApiException;
 use think\Request;
 
-class ThemeController extends Controller
+class ThemeController extends BaseController
 {
     /**
      * 显示资源列表
@@ -14,7 +16,9 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        //
+        $result = (new Theme())->with(['topicImg','headImg'])->select();
+
+        return json($result);
     }
 
     /**
@@ -46,7 +50,10 @@ class ThemeController extends Controller
      */
     public function read($id)
     {
-        //
+        (new IdMustBeInt())->goCheck();
+
+        $result = (new Theme())->with(['topicImg','headImg','product'])->find($id);
+        return json($result);
     }
 
     /**

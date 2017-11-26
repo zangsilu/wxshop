@@ -11,7 +11,9 @@
 
 use think\Route;
 
-Route::rule('api/:version/banner/:id','api/:version.bannerController/view','get');
+Route::rule('api/:version/banner/:id','api/:version.BannerController/view','get');
+Route::rule('api/:version/theme','api/:version.ThemeController/index','get');
+Route::rule('api/:version/theme/:id','api/:version.ThemeController/read','get');
 return [
     '__pattern__' => [
         'name' => '\w+',

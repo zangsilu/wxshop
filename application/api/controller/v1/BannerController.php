@@ -6,7 +6,7 @@ use app\api\controller\validate\IdMustBeInt;
 use app\api\model\Banner;
 use app\library\exception\ApiException;
 
-class BannerController extends baseController
+class BannerController extends BaseController
 {
 
     public function view($id)

@@ -7,7 +7,7 @@ use think\Model;
 
 class Base extends Model
 {
-    protected $hidden = ['delete_time','update_time'];
+    protected $hidden = ['delete_time','update_time','create_time'];
 
 
 }

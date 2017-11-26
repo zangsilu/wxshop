@@ -9,7 +9,7 @@ use think\Controller;
 use think\Request;
 use think\Response;
 
-class baseController extends Controller
+class BaseController extends Controller
 {
 
 

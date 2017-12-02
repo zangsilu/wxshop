@@ -14,6 +14,9 @@ use think\Route;
 Route::rule('api/:version/banner/:id','api/:version.BannerController/view','get');
 Route::rule('api/:version/theme','api/:version.ThemeController/index','get');
 Route::rule('api/:version/theme/:id','api/:version.ThemeController/read','get');
+Route::rule('api/:version/spider','api/:version.SpiderController/index','get');
+Route::rule('api/:version/product','api/:version.ProductController/index','get');
+Route::rule('api/:version/category','api/:version.CategoryController/index','get');
 return [
     '__pattern__' => [
         'name' => '\w+',

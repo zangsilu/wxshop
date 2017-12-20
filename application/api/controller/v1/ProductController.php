@@ -22,26 +22,32 @@ class ProductController extends BaseController
         (new Limit())->goCheck();
         $type = Request::instance()->get('type');
         $limit = Request::instance()->get('limit');
+        $category_id = Request::instance()->get('category_id');
         if($type == Product::NEW){
             /**
              * @var $newProduct Product
              */
-            $newProduct = Product::getNew($limit);
-            if($newProduct->isEmpty()){
-                throw new ApiException(0,400,'商品数据缺失.');
-            }
-
+            $Product = Product::getNew($limit,$category_id);
+        }else{
             /**
-             * collection() 方法可以将数据集数组转为数据集对象,从而可以更加灵活的操作数据
-             * 或者直接修改 database.php配置文件 改为 'resultset_type'  => 'collection',
+             * @var $newProduct Product
              */
-            // $newProduct = collection($newProduct);
-
-
-            $newProduct->hidden(['summary']);
-            return json($newProduct);
+            $Product = Product::getProduct($limit,$category_id);
         }
-        throw new ApiException(0,400,'商品类型错误.');
+
+        if($Product->isEmpty()){
+            throw new ApiException(0,400,'商品数据缺失.');
+        }
+
+        /**
+         * collection() 方法可以将数据集数组转为数据集对象,从而可以更加灵活的操作数据
+         * 或者直接修改 database.php配置文件 改为 'resultset_type'  => 'collection',
+         */
+        // $newProduct = collection($newProduct);
+
+
+        $Product->hidden(['summary']);
+        return json($Product);
     }
 
     /**

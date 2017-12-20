@@ -20,8 +20,31 @@ class Product extends Base
      *
      * @return false|\PDOStatement|string|\think\Collection
      */
-    public static function getNew($limit = 10)
+    /**
+     * @param int $limit
+     * @param     $category_id
+     *
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    public static function getNew($limit = 10,$category_id = null)
     {
-        return static::limit($limit)->order(['create_time'=>'desc'])->select();
+        $query = static::limit($limit)->order(['create_time'=>'desc']);
+        if(!empty($category_id)){
+            $query = $query->where('category_id','=',$category_id);
+        }
+        $query = $query->select();
+        return $query;
     }
+
+    public static function getProduct($limit = 10,$category_id=null)
+    {
+        $query = static::limit($limit);
+        if(!empty($category_id)){
+            $query = $query->where('category_id','=',$category_id);
+        }
+        $query = $query->select();
+        return $query;
+    }
+
+
 }

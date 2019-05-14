@@ -66,7 +66,7 @@ class ExceptionHandler extends Handle
             'request_url' => $request = $request->domain().'/'.$request->url()
         ];
 
-        return jsonError($result, $this->status);
+        return json($result, $this->status);
     }
 
     /*

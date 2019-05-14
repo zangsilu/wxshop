@@ -13,6 +13,7 @@ class Index
 
     public function create($id, $name)
     {
+        var_dump(4234);die;
 
         Request::instance()->getInput();
 
